@@ -14,8 +14,11 @@ app.set('Port', 4001);
 
 app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({extended:true}));
-app.use(bodyparser.json);
+app.use(bodyparser.json());
 app.use(cors({origin:'*'}));
+
+
+app.use('/facturacion', require('./routes/Facturacion.route'));
 
 
 app.listen(app.get('Port'),() => {
