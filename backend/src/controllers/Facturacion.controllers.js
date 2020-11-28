@@ -3,10 +3,11 @@ const Facturacion=require('../models/Facturacion.model');
 
 
 FacturacionCtrl.createFacturacion=async(req,res) => {
-    const {factura, nombreCliente, fecha, identificadorFiscal, consumoW, importe} = req.body;
+    const {factura, nombreCliente, fecha, idFiscal, consumo, importe} = req.body;
+    console.log(req.body);
     const NuevoFacturacion = new Facturacion({
         
-        factura, nombreCliente, fecha, identificadorFiscal, consumoW, importe
+        factura, nombreCliente, fecha, idFiscal, consumo, importe
     });
 
     const idFactura = await Facturacion.findOne({factura:factura});

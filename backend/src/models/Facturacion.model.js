@@ -6,8 +6,8 @@ const FacturacionSchema= new Schema({
     factura: String,
     nombreCliente: String,
     fecha: String,
-    identificadorFiscal: String,
-    consumoW: String,
+    idFiscal: String,
+    consumo: String,
     importe: String
 });
 
