@@ -59,6 +59,17 @@ FacturacionCtrl.actualizar = async (req,res) => {
     })
 }
 
+FacturacionCtrl.buscarfactura = async (req,res) => {
+    const factura = req.params.factura;
+    console.log(factura);
+    const respuesta = await Facturacion.find({factura:factura});
+    console.log(respuesta);
+    //console.log(respuesta.data);
+    res.json (respuesta);
+
+    
+}
+
 
 
 module.exports = FacturacionCtrl

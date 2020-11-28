@@ -69,6 +69,19 @@ export default function Index() {
     }, 2500);
   };
 
+  const buscar = async (e) => {
+    if (e.target.value === '') {
+      return obtenerFacturacion();
+    }
+    const buscar = e.target.value;
+    const respuesta = await Axios.get('http://localhost:4001/facturacion/buscar/' + buscar);
+    console.log(respuesta.data);
+
+    setFacturacion(respuesta.data);
+
+
+  }
+
   return (
     <div>
       <header className="py-2 bg-primary text-white">
@@ -76,13 +89,14 @@ export default function Index() {
           <div className="row">
             <div className="col-md-6">
               <h1>
-                <i className="fas fa-pencil-alt"></i> Titulo{" "}
+                <i className="fas fa-pencil-alt"></i> Titulo
               </h1>
             </div>
           </div>
         </div>
       </header>
 
+      {/* Busqueda */}
       <nav className="navbar py-4">
         <div className="container">
           <div className="col-md-3">
@@ -92,7 +106,6 @@ export default function Index() {
               data-toggle="modal"
               data-target="#addRegistro"
             >
-              {" "}
               <i className="fas fa-plus"> Add Registro</i>
             </Link>
           </div>
@@ -102,7 +115,7 @@ export default function Index() {
                 className="form-control mr-sm-2"
                 type="search"
                 placeholder="Buscar..."
-                aria-label="Search"
+                aria-label="Search" onChange={(e)=> buscar(e)}
               ></input>
             </div>
           </div>
