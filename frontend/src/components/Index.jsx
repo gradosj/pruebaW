@@ -25,6 +25,22 @@ export default function Index() {
     console.log(respuesta.data);
   };
 
+  const eliminar = async (id) => {
+    const respuesta = await Axios.delete(
+      "http://localhost:4001/facturacion/eliminar/" + id
+    );
+
+    const mensaje = respuesta.data.mensaje;
+
+    Swal.fire({
+      icon: "success",
+      title: mensaje,
+      showConfirmationButton: false,
+      timer:2500
+    });
+    obtenerFacturacion();
+  };
+
   const guardar = async (e) => {
     e.preventDefault();
     const nuevoRegFacturacion = {
@@ -48,9 +64,9 @@ export default function Index() {
       title: mensaje,
       showConfirmationButton: false,
     });
-    /*setTimeout(() => {
+    setTimeout(() => {
       window.location.href = "/";
-    }, 2500);*/
+    }, 2500);
   };
 
   return (
@@ -127,14 +143,15 @@ export default function Index() {
                         <td>{facturacion.consumo}</td>
                         <td>{facturacion.importe}</td>
                         <td>
-                          <button className="btn btn-danger mr-1">
-                            {" "}
+                          <button
+                            className="btn btn-danger mr-1"
+                            onClick={() => eliminar(facturacion._id)}
+                          >
                             Eliminar
                           </button>
-                          <button className="btn btn-warning mr-1">
-                            {" "}
+                          <Link className="btn btn-warning mr-1" to={'/editar/' + facturacion._id}>
                             Actualizar
-                          </button>
+                          </Link>
                         </td>
                       </tr>
                     ))}
@@ -212,7 +229,8 @@ export default function Index() {
                     required
                     onChange={(e) => setImporte(e.target.value)}
                   />
-                  <div className="form-group"></div>
+                  </div>
+                  
 
                   <div className="form-group">
                     <button className="btn btn-primary" type="submit">
@@ -220,7 +238,6 @@ export default function Index() {
                       Guardar
                     </button>
                   </div>
-                </div>
               </form>
             </div>
           </div>
