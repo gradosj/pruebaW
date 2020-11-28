@@ -11,7 +11,7 @@ export default function Index() {
   const [idFiscal, setIdFiscal] = useState("");
   const [consumo, setConsumo] = useState("");
   const [importe, setImporte] = useState("");
-  //const [contratoSelect, setContratoSelect] = useState("");
+ 
 
   useEffect(() => {
     obtenerFacturacion();
@@ -89,7 +89,7 @@ export default function Index() {
           <div className="row">
             <div className="col-md-6">
               <h1>
-                <i className="fas fa-pencil-alt"></i> Titulo
+                <i className="fas fa-pencil-alt"></i> Datos de facturación
               </h1>
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function Index() {
               <input
                 className="form-control mr-sm-2"
                 type="search"
-                placeholder="Buscar..."
+                placeholder="Buscar por factura"
                 aria-label="Search" onChange={(e)=> buscar(e)}
               ></input>
             </div>
