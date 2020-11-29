@@ -11,34 +11,41 @@ export default function Index() {
   const [idFiscal, setIdFiscal] = useState("");
   const [consumo, setConsumo] = useState("");
   const [importe, setImporte] = useState("");
- 
+  const URL = "http://localhost:4001/facturacion/";
 
   useEffect(() => {
     obtenerFacturacion();
   }, []);
 
   const obtenerFacturacion = async () => {
-    const respuesta = await Axios.get(
-      "http://localhost:4001/facturacion/listarfacturacion"
-    );
+    const respuesta = await Axios.get(URL + "listarfacturacion/");
     setFacturacion(respuesta.data);
     console.log(respuesta.data);
   };
 
   const eliminar = async (id) => {
-    const respuesta = await Axios.delete(
-      "http://localhost:4001/facturacion/eliminar/" + id
-    );
+    const respuesta = await Axios.delete(URL + "eliminar/" + id);
 
     const mensaje = respuesta.data.mensaje;
+    console.log(respuesta.data.retorno);
 
-    Swal.fire({
-      icon: "success",
-      title: mensaje,
-      showConfirmationButton: false,
-      timer:2500
-    });
-    obtenerFacturacion();
+    if (respuesta.data.retorno === "200") {
+      Swal.fire({
+        icon: "success",
+        title: mensaje,
+        showConfirmationButton: false,
+        timer: 2500,
+      });
+      obtenerFacturacion();
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: mensaje,
+        showConfirmationButton: false,
+        timer: 2500,
+      });
+      obtenerFacturacion();
+    }
   };
 
   const guardar = async (e) => {
@@ -53,34 +60,37 @@ export default function Index() {
     };
 
     console.log(nuevoRegFacturacion);
-    const respuesta = await Axios.post(
-      "http://localhost:4001/facturacion/crear",
-      nuevoRegFacturacion
-    );
+    const respuesta = await Axios.post(URL + "crear", nuevoRegFacturacion);
     const mensaje = respuesta.data.mensaje;
 
-    Swal.fire({
-      icon: "success",
-      title: mensaje,
-      showConfirmationButton: false,
-    });
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 2500);
+    if (respuesta.data.retorno === "200") {
+      Swal.fire({
+        icon: "success",
+        title: mensaje,
+        showConfirmationButton: false,
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2500);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: mensaje,
+        showConfirmationButton: false,
+      });
+    }
   };
 
   const buscar = async (e) => {
-    if (e.target.value === '') {
+    if (e.target.value === "") {
       return obtenerFacturacion();
     }
     const buscar = e.target.value;
-    const respuesta = await Axios.get('http://localhost:4001/facturacion/buscar/' + buscar);
+    const respuesta = await Axios.get(URL + "buscar/" + buscar);
     console.log(respuesta.data);
 
     setFacturacion(respuesta.data);
-
-
-  }
+  };
 
   return (
     <div>
@@ -115,7 +125,8 @@ export default function Index() {
                 className="form-control mr-sm-2"
                 type="search"
                 placeholder="Buscar por factura"
-                aria-label="Search" onChange={(e)=> buscar(e)}
+                aria-label="Search"
+                onChange={(e) => buscar(e)}
               ></input>
             </div>
           </div>
@@ -148,7 +159,7 @@ export default function Index() {
                   <tbody>
                     {facturacion.map((facturacion, i) => (
                       <tr key={facturacion._id}>
-                        <td>{i}</td>
+                        <td>{i + 1}</td>
                         <td>{facturacion.factura}</td>
                         <td>{facturacion.nombreCliente}</td>
                         <td>{facturacion.fecha}</td>
@@ -162,7 +173,10 @@ export default function Index() {
                           >
                             Eliminar
                           </button>
-                          <Link className="btn btn-warning mr-1" to={'/editar/' + facturacion._id}>
+                          <Link
+                            className="btn btn-warning mr-1"
+                            to={"/editar/" + facturacion._id}
+                          >
                             Actualizar
                           </Link>
                         </td>
@@ -210,7 +224,7 @@ export default function Index() {
                 <div className="form-group">
                   <label> Fecha </label>
                   <input
-                    type="text"
+                    type="date"
                     className="form-control"
                     required
                     onChange={(e) => setFecha(e.target.value)}
@@ -228,7 +242,7 @@ export default function Index() {
                 <div className="form-group">
                   <label> Consumo </label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     required
                     onChange={(e) => setConsumo(e.target.value)}
@@ -237,20 +251,19 @@ export default function Index() {
                 <div className="form-group">
                   <label> Importe </label>
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     required
                     onChange={(e) => setImporte(e.target.value)}
                   />
-                  </div>
-                  
+                </div>
 
-                  <div className="form-group">
-                    <button className="btn btn-primary" type="submit">
-                      {" "}
-                      Guardar
-                    </button>
-                  </div>
+                <div className="form-group">
+                  <button className="btn btn-primary" type="submit">
+                    {" "}
+                    Guardar
+                  </button>
+                </div>
               </form>
             </div>
           </div>
