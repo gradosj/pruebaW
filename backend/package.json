@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/api.test.js",
-    "dev": "nodemon ./src/index.js",
+    "start": "nodemon ./src/index.js",
     "install-db": "node install-db.js",
     "delete-db": "node delete-db.js"
 

@@ -21,7 +21,7 @@ La aplicacion correra en el puerto 4001. Para inciarla, ejecutar:
 
 
 ```
-npm run dev 
+npm run start 
 
 ```
 
