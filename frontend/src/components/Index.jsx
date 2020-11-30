@@ -59,11 +59,14 @@ export default function Index() {
       importe,
     };
 
+    console.log('asdadasdasdasdasdasdassdasdasdasda');
     console.log(nuevoRegFacturacion);
     const respuesta = await Axios.post(URL + "crear", nuevoRegFacturacion);
     const mensaje = respuesta.data.mensaje;
 
-    if (respuesta.data.retorno === "200") {
+    console.log('este es el retorno ---> ', respuesta.data.retorno);
+
+    if (respuesta.data.retorno === "201") {
       Swal.fire({
         icon: "success",
         title: mensaje,
@@ -73,6 +76,7 @@ export default function Index() {
         window.location.href = "/";
       }, 2500);
     } else {
+      console.log('Pasa por aqui asdadasdad');
       Swal.fire({
         icon: "error",
         title: mensaje,
@@ -243,6 +247,7 @@ export default function Index() {
                   <label> Consumo </label>
                   <input
                     type="number"
+                    step="any"
                     className="form-control"
                     required
                     onChange={(e) => setConsumo(e.target.value)}
@@ -252,6 +257,7 @@ export default function Index() {
                   <label> Importe </label>
                   <input
                     type="number"
+                    step="any"
                     className="form-control"
                     required
                     onChange={(e) => setImporte(e.target.value)}

@@ -155,8 +155,16 @@ npm run test
 
 
 
+# FrontEnd
 
+Dessarrolo Front en React para el consumo de la API. Se pueden buscar registros por factura, añadirlos, eliminarlos y actualizarlos.
 
+Una vez iniciada la API node del back:
+
+```
+npm start
+
+```
 
 
 
