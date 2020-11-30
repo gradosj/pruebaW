@@ -16,7 +16,7 @@ npm install
 
 # Backend
 
-La aplicacion correra en el puerto 4001.
+La aplicacion correra en el puerto 4001. Para inciarla, ejecutar:
 
 
 
@@ -24,6 +24,7 @@ La aplicacion correra en el puerto 4001.
 npm run dev 
 
 ```
+
 Creará la BBDD y levantará la API
 
 
@@ -35,6 +36,10 @@ Adicionalmente, se permite la subida de datos de prueba desde un csv ya validado
 npm run install-db
 
 ```
+
+El Csv se llama bbddPruebas.csv
+
+
 
 Para eliminar la BBDD ejecutamos: 
 
@@ -62,11 +67,11 @@ const FacturacionSchema = new Schema({
 ```
 
 
-# Metodos
+## Metodos
 La V1 de la API permite hacer operaciones CRUD sobre los datos
 
 
-# Post
+## Post
 Para añadir datos a la api, realizar una operacion post a la url: 
 
 ```
@@ -107,7 +112,7 @@ devuelve consultas tipo:
 
 Adicionalmente, se ha incluido una busqueda individual por numero de factura
 
-    ```
+```
 url/facturacion/buscar/:factura
 
 
@@ -123,8 +128,7 @@ url/facturacion/buscar/:factura
 }
 
 
-
-    ```
+```
 ## Put
 
 Para realizar actualizaciones acceder a:
