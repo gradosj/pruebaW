@@ -3,7 +3,6 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 
 export default function Actualizar(props) {
-
   const [factura, setFactura] = useState("");
   const [nombreCliente, setNombreCliente] = useState("");
   const [fecha, setFecha] = useState("");
@@ -13,17 +12,14 @@ export default function Actualizar(props) {
   const URL = "http://localhost:4001/facturacion/";
 
   useEffect(() => {
-    console.log("entra en el useeffect");
+    //Ejecutamos en la carga
     obtenerFacturacion();
-    // eslint-disable-next-line
   }, []);
 
   const obtenerFacturacion = async () => {
-    console.log("entra en obtener facturacion");
-
     const id = props.match.params.id;
     const respuesta = await Axios.get(URL + "listar/" + id);
-    console.log("la respuesta es --> ", respuesta.data);
+
     setFactura(respuesta.data.factura);
     setNombreCliente(respuesta.data.nombreCliente);
     setFecha(respuesta.data.fecha);
@@ -46,11 +42,7 @@ export default function Actualizar(props) {
     };
 
     const respuesta = await Axios.put(URL + "actualizar/" + id, facturacion);
-    const {mensaje, retorno} = respuesta.data;
-
-    console.log('este es el retorno --> ', retorno)
-
-    console.log('este es el mensaje ---> ', mensaje);
+    const { mensaje, retorno } = respuesta.data;
 
     if (retorno === "200") {
       Swal.fire({
@@ -61,19 +53,14 @@ export default function Actualizar(props) {
       setTimeout(() => {
         window.location.href = "/";
       }, 2500);
-
     } else {
       Swal.fire({
         icon: "error",
         title: mensaje,
         showConfirmButton: true,
       });
-      /*setTimeout(() => {
-        window.location.href = "/";
-      }, 2500);*/
-
+      
     }
-    
   };
 
   return (

@@ -1,6 +1,8 @@
 const FacturacionCtrl = {};
 const Facturacion = require("../models/Facturacion.model");
 
+
+// Crear registro
 FacturacionCtrl.createFacturacion = async (req, res) => {
   const {
     factura,
@@ -10,7 +12,7 @@ FacturacionCtrl.createFacturacion = async (req, res) => {
     consumo,
     importe,
   } = req.body;
- 
+
   const NuevoFacturacion = new Facturacion({
     factura,
     nombreCliente,
@@ -25,7 +27,7 @@ FacturacionCtrl.createFacturacion = async (req, res) => {
       mensaje: "Campo Factura obligatorio",
       retorno: "400",
     });
-    res.render('error', {error:err});
+    res.render("error", { error: err });
   } else {
     const idFactura = await Facturacion.findOne({ factura: factura });
 
@@ -46,16 +48,22 @@ FacturacionCtrl.createFacturacion = async (req, res) => {
   }
 };
 
+// Listar todos los registros
+
 FacturacionCtrl.listar = async (req, res) => {
   const respuesta = await Facturacion.find();
   res.json(respuesta);
 };
 
+
+// Listar por ID
 FacturacionCtrl.listarid = async (req, res) => {
   const id = req.params.id;
   const respuesta = await Facturacion.findById({ _id: id });
   res.json(respuesta);
 };
+
+//Eliminar Registro
 
 FacturacionCtrl.eliminar = async (req, res, next) => {
   try {
@@ -74,7 +82,6 @@ FacturacionCtrl.eliminar = async (req, res, next) => {
       });
     }
   } catch (err) {
-    
     res.json({
       mensaje: "Error",
       retorno: "500",
@@ -82,6 +89,8 @@ FacturacionCtrl.eliminar = async (req, res, next) => {
   }
 };
 
+
+// Actualizar registro
 FacturacionCtrl.actualizar = async (req, res, next) => {
   try {
     const id = req.params.id;
@@ -102,7 +111,7 @@ FacturacionCtrl.actualizar = async (req, res, next) => {
       });
     }
   } catch (err) {
-    console.log("codigo de error----->", err.code);
+    
     if (err.code == 11000) {
       res.json({
         mensaje: "El numero de factura ya existe",
@@ -117,7 +126,7 @@ FacturacionCtrl.actualizar = async (req, res, next) => {
   }
 };
 
-
+// Busqueda por factura
 
 FacturacionCtrl.buscarfactura = async (req, res) => {
   const factura = req.params.factura;

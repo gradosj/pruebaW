@@ -20,14 +20,12 @@ export default function Index() {
   const obtenerFacturacion = async () => {
     const respuesta = await Axios.get(URL + "listarfacturacion/");
     setFacturacion(respuesta.data);
-    console.log(respuesta.data);
   };
 
   const eliminar = async (id) => {
     const respuesta = await Axios.delete(URL + "eliminar/" + id);
 
     const mensaje = respuesta.data.mensaje;
-    console.log(respuesta.data.retorno);
 
     if (respuesta.data.retorno === "200") {
       Swal.fire({
@@ -59,12 +57,8 @@ export default function Index() {
       importe,
     };
 
-    console.log('asdadasdasdasdasdasdassdasdasdasda');
-    console.log(nuevoRegFacturacion);
     const respuesta = await Axios.post(URL + "crear", nuevoRegFacturacion);
     const mensaje = respuesta.data.mensaje;
-
-    console.log('este es el retorno ---> ', respuesta.data.retorno);
 
     if (respuesta.data.retorno === "201") {
       Swal.fire({
@@ -76,7 +70,6 @@ export default function Index() {
         window.location.href = "/";
       }, 2500);
     } else {
-      console.log('Pasa por aqui asdadasdad');
       Swal.fire({
         icon: "error",
         title: mensaje,
@@ -91,7 +84,6 @@ export default function Index() {
     }
     const buscar = e.target.value;
     const respuesta = await Axios.get(URL + "buscar/" + buscar);
-    console.log(respuesta.data);
 
     setFacturacion(respuesta.data);
   };

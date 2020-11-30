@@ -7,19 +7,18 @@ let stream = fs.createReadStream("bbddPruebas.csv");
 let csvData = [];
 let csvStream = fastcsv
   .parse()
-  .on("data", function(data) {
+  .on("data", function (data) {
     csvData.push({
-        factura : data[0],
-        nombreCliente : data[1],
-        fecha: data[2],
-        idFiscal: data[3],
-        consumo: data[4],
-        importe: data[5]
-      
+      factura: data[0],
+      nombreCliente: data[1],
+      fecha: data[2],
+      idFiscal: data[3],
+      consumo: data[4],
+      importe: data[5],
     });
   })
-  .on("end", function() {
-    // remove the first line: header
+  .on("end", function () {
+    
     csvData.shift();
 
     console.log(csvData);
