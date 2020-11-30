@@ -3,7 +3,6 @@ import Axios from "axios";
 import Swal from "sweetalert2";
 
 export default function Actualizar(props) {
-  console.log(" su puta madre");
 
   const [factura, setFactura] = useState("");
   const [nombreCliente, setNombreCliente] = useState("");
@@ -47,15 +46,34 @@ export default function Actualizar(props) {
     };
 
     const respuesta = await Axios.put(URL + "actualizar/" + id, facturacion);
-    const mensaje = respuesta.data.mensaje;
-    Swal.fire({
-      icon: "success",
-      title: mensaje,
-      showConfirmButton: false,
-    });
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 2500);
+    const {mensaje, retorno} = respuesta.data;
+
+    console.log('este es el retorno --> ', retorno)
+
+    console.log('este es el mensaje ---> ', mensaje);
+
+    if (retorno === "200") {
+      Swal.fire({
+        icon: "success",
+        title: mensaje,
+        showConfirmButton: false,
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2500);
+
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: mensaje,
+        showConfirmButton: true,
+      });
+      /*setTimeout(() => {
+        window.location.href = "/";
+      }, 2500);*/
+
+    }
+    
   };
 
   return (
