@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/api.test.js",
     "dev": "nodemon ./src/index.js",
     "install-db": "node install-db.js",
     "delete-db": "node delete-db.js"

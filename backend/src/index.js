@@ -24,3 +24,5 @@ app.use('/facturacion', require('./routes/Facturacion.route'));
 app.listen(app.get('Port'),() => {
     console.log('server listening', app.get('Port'));
 })
+
+module.exports = app;

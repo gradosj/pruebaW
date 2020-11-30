@@ -29,17 +29,13 @@ Creará la BBDD y levantará la API
 
 
 
-Adicionalmente, se permite la subida de datos de prueba desde un csv ya validado en origen con las siguientes instrucciones:
+Adicionalmente, se permite la subida de datos de prueba desde un csv (El Csv se llama bbddPruebas.csv) incluido en el directorio, ya validado en origen con las siguientes instrucciones:
 
 
 ```
 npm run install-db
 
 ```
-
-El Csv se llama bbddPruebas.csv
-
-
 
 Para eliminar la BBDD ejecutamos: 
 
@@ -144,6 +140,16 @@ Para eliminar registros acceder a:
 
 ```
     url/facturacion/eliminar/:id
+
+```
+
+
+## Test
+Se han creados varios test para la API, una vez que la aplicación esté iniciada pueden ejecutarse con :
+
+```
+npm run test
+
 ```
 
 

@@ -20,21 +20,28 @@ FacturacionCtrl.createFacturacion = async (req, res) => {
     importe,
   });
 
-  const idFactura = await Facturacion.findOne({ factura: factura });
-
-  if (idFactura) {
-    res.json({
-      mensaje: "El numero de factura ya existe",
-      retorno: "402",
+  if (!factura) {
+    res.status(400).json({
+      mensaje: "Campo Factura obligatorio",
+      retorno: "400",
     });
   } else {
-    await NuevoFacturacion.save();
-    res.json({
-      mensaje: "Registro agregado OK",
-      retorno: "200",
+    const idFactura = await Facturacion.findOne({ factura: factura });
 
-      factura: NuevoFacturacion.factura,
-    });
+    if (idFactura) {
+      res.status(402).json({
+        mensaje: "El numero de factura ya existe",
+        retorno: "402",
+      });
+    } else {
+      await NuevoFacturacion.save();
+      res.status(201).json({
+        mensaje: "Registro agregado OK",
+        retorno: "201",
+
+        factura: NuevoFacturacion.factura,
+      });
+    }
   }
 };
 
@@ -55,18 +62,18 @@ FacturacionCtrl.eliminar = async (req, res, next) => {
     const facturacion = await Facturacion.findByIdAndRemove({ _id: id });
 
     if (facturacion) {
-      res.json({
+      res.status(200).json({
         mensaje: "Registro Eliminado",
         retorno: "200",
       });
     } else {
-      res.json({
+      res.status(402).json({
         mensaje: "Registro Inexistente",
         retorno: "402",
       });
     }
   } catch (err) {
-    res.json({
+    res.status(500).json({
       mensaje: "Error",
       retorno: "500",
     });
@@ -82,12 +89,12 @@ FacturacionCtrl.actualizar = async (req, res, next) => {
     );
 
     if (facturacion) {
-      res.json({
+      res.status(200).json({
         mensaje: "Registro Actualizado",
         retorno: "200",
       });
     } else {
-      res.json({
+      res.status(402).json({
         mensaje: "Registro Inexistente",
         retorno: "402",
       });
@@ -95,12 +102,12 @@ FacturacionCtrl.actualizar = async (req, res, next) => {
   } catch (err) {
     console.log("codigo de error----->", err.code);
     if (err.code == 11000) {
-      res.json({
+      res.status(402).json({
         mensaje: "El numero de factura ya existe",
         retorno: "402",
       });
     } else {
-      res.json({
+      res.status(500).json({
         mensaje: "Error al actualizar",
         retorno: "500",
       });
@@ -108,10 +115,20 @@ FacturacionCtrl.actualizar = async (req, res, next) => {
   }
 };
 
+
+
 FacturacionCtrl.buscarfactura = async (req, res) => {
   const factura = req.params.factura;
-  const respuesta = await Facturacion.find({ factura: factura });
-  res.json(respuesta);
+  const respuesta = await Facturacion.findOne({ factura: factura });
+
+  if (respuesta) {
+    res.status(200).json(respuesta);
+  } else {
+    res.status(304).json({
+      mensaje: "Registro Inexistente",
+      retorno: "304",
+    });
+  }
 };
 
 module.exports = FacturacionCtrl;
